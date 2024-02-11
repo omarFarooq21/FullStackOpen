@@ -6,19 +6,21 @@ const Header = (props) => {
   )
 }
 
+const Part = (props) => {
+  return(
+    <p>
+      {props.part} - {props.exercise}
+    </p>
+  )
+
+}
 const Content = (props) => {
   return (
-    <p>
-      {props.content.forEach( (element, index) => {
-        if(index%2 == 0)
-        {
-          const para = document.createElement('p')
-          para.textContent =  `${element} ${props.content[index+1]}`;
-          document.body.appendChild(para)
-          console.log(element, index)
-        }
-      })} 
-    </p>
+    <div>
+      <Part part = {props.content[0]} exercise = {props.content[1]} />
+      <Part part = {props.content[2]} exercise = {props.content[3]} />
+      <Part part = {props.content[4]} exercise = {props.content[5]} />
+    </div>
      
   )
 }
