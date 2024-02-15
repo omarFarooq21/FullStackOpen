@@ -7,7 +7,13 @@ const Button = (props) => {
     </button>
   )
 }
-const Statistics = ({good, bad, neutral}) => {
+const Statistics = ({good, bad, neutral, allRatings}) => {
+  let sum = 0;
+  allRatings.forEach(element => {
+    sum += element;
+  })
+  const percentGood = Math.round((good / allRatings.length)*100)
+  const average = sum/allRatings.length
   return(
     <>
      <h1>
@@ -17,6 +23,9 @@ const Statistics = ({good, bad, neutral}) => {
      <p>good {good}</p>
      <p>bad {bad}</p>
      <p>neutral {neutral}</p>
+     <p>all {allRatings.length}</p>
+     <p>average: {average}</p>
+     <p>positive: {`${percentGood}%`}</p>
     </> 
   )
 }
@@ -26,15 +35,20 @@ const App = () => {
   const [good, setGood] = useState(0)
   const [neutral, setNeutral] = useState(0)
   const [bad, setBad] = useState(0)
+  const [allRatings, setAll] = useState([])
+
   const handleGoodClick = () => {
     setGood(good+1)
     console.log("Good: ", good)
+    setAll(allRatings.concat(1))
   }
   const handleBadClick = () => {
     setBad(bad+1)
+    setAll(allRatings.concat(-1))
   }
   const handleNeutralClick = () => {
     setNeutral(neutral+1)
+    setAll(allRatings.concat(0))
   }
   return (
     <div>
@@ -42,7 +56,7 @@ const App = () => {
       <Button text = {`Good: ${good}`} handleClick = {handleGoodClick}/>
       <Button text = {`Bad: ${bad}`} handleClick = {handleBadClick}/>
       <Button text = {`Neutral: ${neutral}`} handleClick= {handleNeutralClick} />
-      <Statistics good = {good} bad = {bad} neutral = {neutral}/>
+      <Statistics good = {good} bad = {bad} neutral = {neutral} allRatings = {allRatings}/>
     </div>
   )
 }
