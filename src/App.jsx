@@ -1,112 +1,40 @@
 import { useState } from 'react'
 
 const Button = (props) => {
-  return( 
-    <button onClick = {props.handleClick}>
-      {props.text}
-    </button>
-  )
-}
-const StatisticLine = ({text, value}) => {
   return(
     <>
-    <table>
-      <colgroup>
-        <col style={{width:90}}/>
-        <col/>
-      </colgroup>
-      <tbody>
-        <tr>
-          <td>
-            {text}
-          </td>
-          <td>
-            {value}
-          </td>
-        </tr>
-      </tbody>
-    </table>
+      <button onClick={props.handleClick}>next anecode</button>
     </>
   )
 }
-const Statistics = ({good, bad, neutral, allRatings, Feedback}) => {
-  let sum = 0;
-  allRatings.forEach(element => {
-    sum += element;
-  })
-  const percentGood = Math.round((good / allRatings.length)*100)
-  const average = sum/allRatings.length
-  if(Feedback)
-  {
-    return(
-      <>
-       <h1>
-        Statistics
-       </h1>
-       <StatisticLine text="good" value={good}/>
-       <StatisticLine text="bad" value={bad}/>
-       <StatisticLine text="neutral" value={neutral}/>
-       <StatisticLine text="all" value={allRatings.length}/>
-       <StatisticLine text="average" value={average}/>
-       <StatisticLine text="postivie" value={`${percentGood}%`}/>
-       {/* <p>good {good}</p>
-       <p>bad {bad}</p>
-       <p>neutral {neutral}</p>
-       <p>all {allRatings.length}</p>
-       <p>average: {average}</p>
-       <p>positive: {`${percentGood}%`}</p> */}
-      </> 
-    )
-  }
-  else {
-    return(
-      <>
-        <h1>
-          Statistics
-        </h1>
-        <p>
-          No feedback given
-        </p>
-      </>
-    )
-  }
-
-}
 
 const App = () => {
-  // save clicks of each button to its own state
-  const [good, setGood] = useState(0)
-  const [neutral, setNeutral] = useState(0)
-  const [bad, setBad] = useState(0)
-  const [allRatings, setAll] = useState([])
-  const [feedback, setFeedback] = useState(false)
-  const handleGoodClick = () => {
-    setGood(good+1)
-    console.log("Good: ", good)
-    setAll(allRatings.concat(1))
-    setFeedback(true)
-  }
-  const handleBadClick = () => {
-    setBad(bad+1)
-    setAll(allRatings.concat(-1))
-    setFeedback(true)
-  }
-  const handleNeutralClick = () => {
-    console.log(feedback, "Feedback before making any changes")
-    setFeedback(true)
-    console.log(feedback, "on neutral before changing neutral")
-    setNeutral(neutral+1)
-    setAll(allRatings.concat(0))
-    console.log(feedback, "on neutral after setting feedback: true and neutral++")
+  const anecdotes = [
+    'If it hurts, do it more often.',
+    'Adding manpower to a late software project makes it later!',
+    'The first 90 percent of the code accounts for the first 90 percent of the development time...The remaining 10 percent of the code accounts for the other 90 percent of the development time.',
+    'Any fool can write code that a computer can understand. Good programmers write code that humans can understand.',
+    'Premature optimization is the root of all evil.',
+    'Debugging is twice as hard as writing the code in the first place. Therefore, if you write the code as cleverly as possible, you are, by definition, not smart enough to debug it.',
+    'Programming without an extremely heavy use of console.log is same as if a doctor would refuse to use x-rays or blood tests when diagnosing patients.',
+    'The only way to go fast, is to go well.'
+  ]
+ 
+  const [selected, setSelected] = useState(0)
+  const handleClick = () => {
+    let i = Math.floor(Math.random() * anecdotes.length)
+    setSelected(i)
   }
   return (
-    <div>
-      <h1> Give Feedback </h1>
-      <Button text = {`Good: ${good}`} handleClick = {handleGoodClick}/>
-      <Button text = {`Bad: ${bad}`} handleClick = {handleBadClick}/>
-      <Button text = {`Neutral: ${neutral}`} handleClick= {handleNeutralClick} />
-      <Statistics good = {good} bad = {bad} neutral = {neutral} allRatings = {allRatings} Feedback = {feedback}/>
-    </div>
+    <>
+      <div>
+        {anecdotes[selected]}
+      </div>
+      <div>
+        <Button handleClick = {handleClick}/>
+      </div>
+    </>
+   
   )
 }
 
