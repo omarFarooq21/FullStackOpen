@@ -21,17 +21,17 @@ const App = () => {
   ]
 
   const [selected, setSelected] = useState(0)
-  
-  let n = anecdotes.length
-  const votes = Array(n).fill(0)
+  const [votes, setVotes] = useState(Array(anecdotes.length).fill(0))
+
   
   const nextAnecdote = () => {
     let i = Math.floor(Math.random() * anecdotes.length)
     setSelected(i)
   }
   const vote = () => {
-    votes[selected]++
-    console.log(votes[selected])
+    const newVotes = [...votes]
+    newVotes[selected]++
+    setVotes(newVotes)
   }
   return (
     <>
