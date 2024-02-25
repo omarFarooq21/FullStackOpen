@@ -1,24 +1,30 @@
-const Course = ({course}) => {
-  console.log(course.parts)
-  const total = course.parts.reduce(
-    (sum, course) => {
-      return sum + course.exercises
-    }, 0
-  )
-  console.log(total)
+const Course = ({courses}) => {
+  // console.log(courses[0])
   return(
     <>
-     <h1>
-      {course.name}
-     </h1>
-     <ul>
-      {course.parts.map( (item) => <li key = {item.id}>{item.name} {item.exercises}</li>) }
-     </ul>
-
-     <p>
-      <b>total of {total} exercises </b>
-     </p>
-
+    {
+      courses.map( (course) => {
+        return(
+          <>
+            <h1 key = {course.id}>
+              {course.name}
+            </h1>
+            {
+              <ul>
+                {course.parts.map((part) => {
+                  return(
+                    <>
+                      <li key={part.id}>{part.name} {part.exercises}</li>
+                    </>
+                  )
+                })}
+              </ul>
+            }
+          </>
+          
+        )
+       })
+    }
     </>
    
   )
