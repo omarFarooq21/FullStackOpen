@@ -20,13 +20,11 @@ const Course = ({courses}) => {
                 })}
               </ul>
             }
-          </>
-          
+          </>     
         )
        })
     }
     </>
-   
   )
 }
 export default Course
