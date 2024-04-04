@@ -3,15 +3,14 @@ import Filter from './components/Filter'
 import PersonForm from "./components/PersonForm";
 import Persons from "./components/Persons"
 import axios from "axios"
+import peopleService from "./services/people"
 const App = () => {
   const [persons, setPersons] = useState([]);
 
   useEffect(() => {
-      axios.get("http://localhost:3001/persons").then(
-      response => {
-        setPersons(response.data)
-      }
-    )
+      peopleService.getAll().then(response => {
+        setPersons(response)
+      })
   }, [])
   
   // const [persons, setPersons] = useState([
@@ -40,9 +39,9 @@ const App = () => {
       }
     })
     const nameObj = {
-      id: persons.length + 1,
       name: newName,
       number: newNumber,
+      id: persons.length + 1,
     }
     if (!added) {
       setPersons(persons.concat(nameObj))
@@ -51,6 +50,8 @@ const App = () => {
     else if (added) {
       alert(`${newName} is already added!`)
     }
+    peopleService
+    .create(nameObj)
   }
   const handleNameChange = (event) => {
     setNewName(event.target.value)
